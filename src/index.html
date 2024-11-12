@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-80">
+        <input
+            type="text"
+            id="display"
+            class="w-full text-right text-2xl p-3 bg-gray-200 rounded mb-4 focus:outline-none"
+            readonly
+            placeholder="0"
+        />
+
+        <div class="grid grid-cols-4 gap-4">
+            <!-- Numbers & Operators -->
+            <button onclick="clearDisplay()" class="btn bg-red-500">C</button>
+            <button onclick="deleteLast()" class="btn bg-yellow-500">&larr;</button>
+            <button onclick="appendOperator('/')" class="btn bg-blue-500">/</button>
+            <button onclick="appendOperator('*')" class="btn bg-blue-500">*</button>
+
+            <button onclick="appendNumber(7)" class="btn bg-gray-300">7</button>
+            <button onclick="appendNumber(8)" class="btn bg-gray-300">8</button>
+            <button onclick="appendNumber(9)" class="btn bg-gray-300">9</button>
+            <button onclick="appendOperator('-')" class="btn bg-blue-500">-</button>
+
+            <button onclick="appendNumber(4)" class="btn bg-gray-300">4</button>
+            <button onclick="appendNumber(5)" class="btn bg-gray-300">5</button>
+            <button onclick="appendNumber(6)" class="btn bg-gray-300">6</button>
+            <button onclick="appendOperator('+')" class="btn bg-blue-500">+</button>
+
+            <button onclick="appendNumber(1)" class="btn bg-gray-300">1</button>
+            <button onclick="appendNumber(2)" class="btn bg-gray-300">2</button>
+            <button onclick="appendNumber(3)" class="btn bg-gray-300">3</button>
+            <button onclick="calculateResult()" class="btn row-span-2 bg-green-500">=</button>
+
+            <button onclick="appendNumber(0)" class="col-span-2 btn bg-gray-300">0</button>
+            <button onclick="appendOperator('.')" class="btn bg-gray-300">.</button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const display = document.getElementById('display');
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function appendNumber(number) {
+            display.value += number;
+        }
+
+        function appendOperator(operator) {
+            const lastChar = display.value.slice(-1);
+            if (['+', '-', '*', '/'].includes(lastChar)) {
+                display.value = display.value.slice(0, -1) + operator;
+            } else {
+                display.value += operator;
+            }
+        }
+
+        function calculateResult() {
+            try {
+                display.value = eval(display.value) || '';
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
